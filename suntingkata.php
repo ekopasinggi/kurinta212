@@ -11,6 +11,19 @@ Coded by Creative Tim
 =========================================================
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+
+<?php
+/**
+ * using mysqli_connect for database connection
+ */
+include_once ("conn.php");
+$id = $_GET['id'];
+
+$result = mysqli_query($koneksi, "SELECT * from tbl_kamus where id = $id");
+$data = mysqli_fetch_array($result);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,11 +46,11 @@ The above copyright notice and this permission notice shall be included in all c
 </head>
 
 <body class="index-page sidebar-collapse">
-  <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+  <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-lg"  id="sectionsNav">
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand" href="#">
-          KURINTA </a>
+          KURINTA - ADMIN DASHBOARD</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
           <span class="navbar-toggler-icon"></span>
@@ -46,44 +59,12 @@ The above copyright notice and this permission notice shall be included in all c
         </button>
       </div>
       
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          
-          <li class="nav-item">
-            <a class="nav-link" href="login.php" onclick="scrollToDownload()">
-              <i class="material-icons">login</i> Login
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)" onclick="scrollToDownload()">
-              <i class="material-icons">account_circle</i> Tentang
-            </a>
-          </li>
-
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Follow us on Twitter" rel="nofollow">
-              <i class="fa fa-twitter"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Like us on Facebook" rel="nofollow">
-              <i class="fa fa-facebook-square"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Follow us on Instagram" rel="nofollow">
-              <i class="fa fa-instagram"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
+      
     </div>
   </nav>
 
 
-  <div class="page-header header-filter black-filter" data-parallax="true" style="background-image: url('./assets/img/bg-masthead.jpg');">
+  
     <div class="container">
       <div class="row">
         <div class="col-md-8 ml-auto mr-auto">
@@ -94,102 +75,67 @@ The above copyright notice and this permission notice shall be included in all c
         </div>
       </div>
     </div>
-  </div>
+  
 
 <!--  batas atas -->
 
   <div class="main main-raised">
     <div class="section section-basic">
       <div class="container">
+
+        <div class="row ">
+          <h2 class="text-center">Tambah Kata.</h2>
+        </div>
+
+        
+
         <div class="row">
-        <div class="col-12">
-                    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-
-                        <label for="sel1">Kata Kunci:</label>
-
-
-                        <div class="row">
-                            <div class="col-sm-10">
-                                <?php
-                                $kata_kunci = "";
-                                if (isset($_POST['kata_kunci'])) {
-                                    $kata_kunci = $_POST['kata_kunci'];
-                                }
-                                ?>
-                                <div class="form-group">
-                                  <input type="text" name="kata_kunci" id="kata_kunci" value="<?php echo $kata_kunci; ?>" class="form-control" required />
-                                  <span class="bmd-help">Dapat menggunakan Bahasa Toraja atau Bahasa Indonesia.</span>
-                                </div>
-                            </div>
-
-                            <div class="col-2">
-
-                                <input type="submit" class="btn btn-light button-lg" value="Cari">
-
-                            </div>
-
+        <div class="col text-white">
+                <form action="simpan.php" method="post">
+                    <div class="row">
+                        <label class="col-2 col-form-label text-right">Toraja :</label>
+                        <div class="col mb-2">
+                            <input name="toraja" type="text" class="form-control" placeholder="" value="<?php echo $data['toraja']; ?>">
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2 col-form-label text-right">Indonesia :</label>
+                        <div class="col mb-2">
+                            <input name="indonesia" type="text" class="form-control" placeholder="" value="<?php echo $data['indonesia']; ?>">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2 col-form-label text-right">Makna :</label>
+                        <div class="col mb-2">
+                        <textarea name="makna" class="form-control"  rows="4"><?php echo $data['makna']; ?></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-2 col-form-label text-right">Contoh Kalimat :</label>
+                        <div class="col mb-2">
+                          <textarea name="contoh" class="form-control"  rows="4"><?php echo $data['contoh']; ?></textarea>
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                      <input type="hidden" name="id" value="<?php echo $id;?>">
+                      
+                    </div>
+
+                    <div class="row">
+                        <label class="col-2 col-form-label text-right"></label>
+                        <div class="col mb-2 text-right">
+                            <button type="submit" name="submit_update" class="col-2 btn btn-primary">SIMPAN</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
         </div>
 
 
-        <div>
-
-                <?php
-
-                include "conn.php";
-                if (isset($_POST['kata_kunci'])) {
-                    $kata_kunci = mysqli_real_escape_string($koneksi, trim($_POST['kata_kunci']));
-                    $sql = "SELECT * from tbl_kamus where toraja like '%" . $kata_kunci . "%' or indonesia like '%" . $kata_kunci . "%' order by toraja asc";
-                } else {
-                    $sql = "SELECT * from tbl_kamus order by toraja asc limit 9";
-                }
-                $hasil = mysqli_query($koneksi, $sql);
-
-                $i = 0;
-                while ($data = mysqli_fetch_array($hasil)) {
-                    if ($i % 3 == 0) {
-                ?>
-                        <div class="row mt-3">
-                        <?php
-                    }
-
-                        ?>
-                        <div class="col-sm-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo $data["toraja"]; ?></h5>
-                                    <h6 class="card-subtitle mb-2 text-muted"><?php echo $data["indonesia"];   ?></h6>
-                                    <p class="card-text"><?php echo $data["makna"];   ?></p>
-                                    <p class="card-text"><?php echo $data["contoh"];   ?></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <?php
-                        if ($i % 3 == 2) {
-                        ?>
-                        </div>
-                        <br>
-                <?php
-                        }
-
-                        $i++;
-                    }
-                    if ($i < 3) {
-                      ?>
-                        </div>
-                        <br>
-                <?php
-                        }
-
-                ?>
-
-
-            </div>
-      </div>
+                    </div>
     </div>
   </div>
 
