@@ -24,7 +24,7 @@
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
 		      	
-		      	<form action="#" class="signin-form">
+		      	<form action="daftarkata.php" class="signin-form">
 		      		<div class="form-group">
 		      			<input type="text" class="form-control" placeholder="Username" required>
 		      		</div>
